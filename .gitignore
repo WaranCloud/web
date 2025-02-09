@@ -86,3 +86,5 @@ docs/_build/
 
 # OCA rules
 !static/lib/
+
+web_responsive/static/src/img/home-menu-bg-overlay.svg
