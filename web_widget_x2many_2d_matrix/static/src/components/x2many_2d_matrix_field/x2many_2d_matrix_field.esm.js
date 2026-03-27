@@ -18,13 +18,21 @@ export class X2Many2DMatrixField extends Component {
     get list() {
         return this.getList();
     }
+
+    getListView() {
+        return this.props.list_view;
+    }
+
+    get list_view() {
+        return this.getListView();
+    }
 }
 
 X2Many2DMatrixField.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixField";
 X2Many2DMatrixField.props = {
     ...standardFieldProps,
-    list: {type: Object, optional: true},
-    matrixFields: {type: Object, optional: true},
+    list_view: {type: Object, optional: false},
+    matrixFields: {type: Object, optional: false},
     isXClickable: {type: Boolean, optional: true},
     isYClickable: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
@@ -34,8 +42,9 @@ X2Many2DMatrixField.props = {
 X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {
     component: X2Many2DMatrixField,
-    extractProps({attrs}) {
+    extractProps({attrs, views}) {
         return {
+            list_view: views.list,
             matrixFields: {
                 value: attrs.field_value,
                 x: attrs.field_x_axis,

@@ -176,6 +176,12 @@ patch(many2OneField, {
             {attrs, context, decorations, options, string},
             dynamicInfo
         );
+        // FIXME: field of type === "many2one_reference" does not support m2o_options_props.
+        // This no-op prevents crashes, but proper option support is still missing.
+        // See roadmap note in PR #3205
+        if (!this.m2o_options_props) {
+            return props;
+        }
         const new_props = this.m2o_options_props(props, attrs, options);
         return new_props;
     },
@@ -376,6 +382,9 @@ patch(FormController.prototype, {
             viewType = viewType.replace("tree", "list");
             if (viewType.includes(",")) {
                 viewType = isSmall ? "kanban" : "list";
+                if (field.widget && field.widget === "section_one2many") {
+                    viewType = "list";
+                }
             }
             field.viewMode = viewType;
             if (field.views && field.views[viewType] && limit) {
